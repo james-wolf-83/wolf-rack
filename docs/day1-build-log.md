@@ -52,3 +52,13 @@ terraform apply
 2. Push keys to all three nodes
 3. Build Ansible inventory
 4. Write base hardening playbook
+
+## Wolf-Rack Stack Addition — Liquibase
+Liquibase sits above Ansible as the database schema versioning and migration layer.
+Flow: Terraform builds the rack → Ansible installs and configures the databases → Liquibase manages all schema changes and versioning.
+
+Why it fits: Demonstrates cross-platform schema management across PostgreSQL, Oracle 23ai, and MariaDB from a single changelog. Ties directly to real Oracle production experience. Highly pitchable to small businesses as part of a complete ground-up systems design.
+
+Add as an Ansible role that installs Liquibase and runs changelogs against each node.
+
+Tomorrow: Fix wolf-oracle SSH first, then Ansible inventory, then base hardening playbook. Liquibase comes after databases are installed.
