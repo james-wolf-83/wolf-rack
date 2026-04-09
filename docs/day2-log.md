@@ -181,7 +181,3 @@ Patroni + etcd   — automated PostgreSQL failover
 
 Liquibase sits above Ansible. Flow:
 Terraform builds rack → Ansible installs DBs → Liquibase manages schema migrations
-
-Goal: demonstrate cross-platform schema management across PostgreSQL, Oracle 23ai,
-and MariaDB from a single changelog. Pitchable to small businesses as complete
-ground-up systems design.
