@@ -1,6 +1,6 @@
 #wolf-rack
 
-A production-grade, heterogeneous Linux cluster built to demonstrate both my Unix/Linux capabilites as well as my systems architectural designe capabilites.
+A production-grade, heterogeneous Linux cluster built to demonstrate both my Unix/Linux capabilites as well as my systems architectural design capabilites.
 
 | Node | OS | Database | Focus |
 |------|----|----------|-------|
