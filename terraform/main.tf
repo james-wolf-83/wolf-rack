@@ -24,9 +24,9 @@ resource "lxd_instance" "debian_node" {
   }
 }
 
-resource "lxd_instance" "oracle_node" {
-  name  = "wolf-oracle"
-  image = "images:oracle/9"
+resource "lxd_instance" "alma_node" {
+  name  = "wolf-alma"
+  image = "images:almalinux/9"
   type  = "container"
 
   config = {
@@ -39,9 +39,9 @@ resource "lxd_instance" "oracle_node" {
   }
 }
 
-resource "lxd_instance" "fedora_node" {
-  name  = "wolf-fedora"
-  image = "images:fedora/43"
+resource "lxd_instance" "rocky_node" {
+  name  = "wolf-rocky"
+  image = "images:rockylinux/9"
   type  = "container"
 
   config = {
