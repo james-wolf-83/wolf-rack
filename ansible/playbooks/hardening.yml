@@ -1,0 +1,25 @@
+- name: Base Hardening
+  hosts: wolf_nodes
+  become: yes
+
+  vars:
+    ssh_port: 22
+    banner_text: "Authorized access only."
+
+  tasks:
+    - name: Ensure SSH is installed
+      package:
+        name: openssh-server
+        state: present
+
+    - name: Enable firewalld
+      service:
+        name: firewalld
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: Enable ufw
+      service: 
+        name: ufw
+        state: started
+      when: ansible_os_family == "Debian"
