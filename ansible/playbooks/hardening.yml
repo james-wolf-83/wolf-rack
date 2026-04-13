@@ -7,12 +7,6 @@
     banner_text: "Authorized access only."
 
   tasks:
-    - name: Ensure SSH is installed
-      package:
-        name: openssh-server
-        state: present
-      ignore_errors: yes
-
     - name: Harden SSH configuration
       lineinfile:
         path: /etc/ssh/sshd_config
