@@ -11,15 +11,28 @@
       package:
         name: openssh-server
         state: present
+      ignore_errors: yes
 
-    - name: Enable firewalld
-      service:
-        name: firewalld
-        state: started
-      when: ansible_os_family == "RedHat"
-
-    - name: Enable ufw
-      service: 
-        name: ufw
-        state: started
+    - name: Harden SSH configuration
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      loop:
+        - { regexp: '^PermitRootLogin', line: 'PermitRootLogin prohibit-password' }
+        - { regexp: '^PasswordAuthentication', line: 'PasswordAuthentication no' }
+        - { regexp: '^X11Forwarding', line: 'X11Forwarding no' }
+        - { regexp: '^ClientAliveInterval', line: 'ClientAliveInterval 300' }
+        - { regexp: '^ClientAliveCountMax', line: 'ClientAliveCountMax 2' }
+    
+    - name: Restart SSH on Debian
+      shell: sleep 2 && systemctl restart ssh
       when: ansible_os_family == "Debian"
+      async: 10
+      poll: 0
+
+    - name: Set login banner
+      copy:
+        content: "{{ banner_text }}"
+        dest: /etc/motd 
