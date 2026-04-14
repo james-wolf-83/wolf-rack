@@ -1,0 +1,37 @@
+- name: PostgreSQL Install
+  hosts: wolf-debian
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+    - name: Ensure PostgreSQL is running
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+  
+    - name: Configure PostgreSQL to listen on all interfaces
+      lineinfile:
+        path: /etc/postgresql/15/main/postgresql.conf
+        regexp: '^#listen_addresses'
+        line: "listen_addresses = '*'"
+      notify: Restart PostgreSQL
+
+    - name: Allow replication connections from wolf-rack subnet
+      lineinfile:
+        path: /etc/postgresql/15/main/pg_hba.conf
+        line: "host replication replicator 10.33.214.0/24 md5"
+        insertafter: EOF
+
+  handlers:
+    - name: Restart PostgreSQL
+      service:
+        name: postgresql
+        state: restarted
